@@ -1,7 +1,90 @@
 body{
     margin: 0;
-    font-size: 20px;
+    font-family: 'Quattrocento', sans-serif;
 }
-p{
-    color: blue;
+header{
+    display: flex;
+    justify-content: center;
+    background-color: beige;
+
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.container_inputs_date{
+    display: flex;
+}
+.container_add_buttons{
+    display: flex;
+}
+.container_selects{
+    display: flex;
+}
+.container_calculate{
+    display: flex;
+}
+
+.input{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-family: 'Quattrocento', sans-serif;
+    font-size: 15px;
+    border-radius: 5px;
+    border: solid 1px grey;
+    
+}
+.label {
+    font-size: 15px;
+    margin: 10px;
+}
+.select{
+    font-family: 'Quattrocento', sans-serif;
+    font-size: 15px;
+    margin: 10px;
+    border-radius: 7px;
+    border: none;
+}
+.button{
+    font-family: 'Quattrocento', sans-serif;
+    font-size: 15px;
+    margin: 10px;
+    border-radius: 7px;
+    border: solid 1px grey;
+    background-color: beige;
+
+}
+.result{
+    margin: 10px;
+
+}
+.results_header{
+    display: flex;
+    justify-content: center;
+    background-color: beige;
+}
+@media all and (min-width: 320px) and (max-width: 780px){
+    .container_inputs_date,
+    .container_selects,
+    .container_add_buttons,
+    .container_calculate,
+    .result{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    header{
+     display: none;
+    }
+    .mobile_header{
+        display: flex;
+    }
+    
+}
+@media all and (min-width: 781px) {
+    .mobile_header{
+        display: none;
+    }
+
 }
