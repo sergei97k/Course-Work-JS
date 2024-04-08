@@ -17,6 +17,7 @@ let resultDateCalculation;
 
 
 
+
 // functions that are working :)
 const handleSubmit = (event) => {
   event.preventDefault();
@@ -27,26 +28,24 @@ const handleSubmit = (event) => {
 
 };
 const addAWeek = () => {
+  let start = startDate.valueAsDate;
+  start.setDate(start.getDate() + 7);
 
-  let start = new Date(startDate.value).getTime();
-  let end = new Date(start + 604800000);
-
-
-  let endYear = end.getFullYear();
-  let endMonth = end.getMonth() + 1 < 10 ? `0${end.getMonth() + 1}` : `${end.getMonth() + 1}`;
-  let endDay = end.getDate() < 10 ? `0${end.getDate()}` : `${end.getDate()}`;
-
+  let endYear = start.getFullYear();
+  let endMonth = start.getMonth() + 1 < 10 ? `0${start.getMonth() + 1}` : `${start.getMonth() + 1}`;
+  let endDay = start.getDate() < 10 ? `0${start.getDate()}` : `${start.getDate()}`;
 
   endDate.value = `${endYear}-${endMonth}-${endDay}`;
 
 };
 const addAnMonth = () => {
-  let start = new Date(startDate.value).getTime();
-  let end = new Date(start + 2629743000);
+  let start = startDate.valueAsDate;
+  start.setMonth(start.getMonth() + 1);
 
-  let endYear = end.getFullYear();
-  let endMonth = end.getMonth() + 1 < 10 ? `0${end.getMonth() + 1}` : `${end.getMonth() + 1}`;
-  let endDay = end.getDate() < 10 ? `0${end.getDate()}` : `${end.getDate()}`;
+
+  let endYear = start.getFullYear();
+  let endMonth = start.getMonth() + 1 < 10 ? `0${start.getMonth() + 1}` : `${start.getMonth() + 1}`;
+  let endDay = start.getDate() < 10 ? `0${start.getDate()}` : `${start.getDate()}`;
 
   endDate.value = `${endYear}-${endMonth}-${endDay}`;
 }
@@ -66,11 +65,27 @@ const validationOfEndDate = () => {
 
 };
 
+// functions still in process
+// const calculateWeekend = () => {
+  
+//   let kindOfDays = selectWeekend.value;
+ 
+
+// if (kindOfDays === "all-days"){
+ 
+
+
+// }
+//   };
+
+  
 function durationBetweenDates(){
 
   let start = startDate.value;
   let end = endDate.value;
   let unit = selectUnit.value;
+  let kindOfDays = selectWeekend.value;
+
 
   let difference = Math.abs(new Date (end) - new Date (start)); 
 
@@ -108,15 +123,6 @@ plusMonth.addEventListener("click", addAnMonth);
 
 
 
-// // functions still in process
-// const calculateWeekend = (resultDateCalculation) => {
-
-// switch (selectWeekend.value){
-//   case "all-days" : return resultDateCalculation;
-
-//   case "working-days": return 
-//   }
-// };
 
 
 
