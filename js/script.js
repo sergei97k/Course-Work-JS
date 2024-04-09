@@ -11,8 +11,10 @@ let selectWeekend = document.querySelector(".select_days");
 let selectUnit = document.querySelector(".select_unit");
 let resultOfCalculation = document.querySelector(".result");
 
-let resultDateCalculation;
 
+// Just variables
+let resultDateCalculation;
+let difference;
 
 
 
@@ -21,10 +23,8 @@ let resultDateCalculation;
 // functions that are working :)
 const handleSubmit = (event) => {
   event.preventDefault();
-  resultDateCalculation = durationBetweenDates();
+  resultDateCalculation = durationBetweenDates(difference);
   resultOfCalculation.textContent = ` result: ${resultDateCalculation}`;
-  // calculateWeekend();// here is the call for the weekend selector function
-  // console.log(resultDateCalculation)
 
 };
 const addAWeek = () => {
@@ -66,28 +66,28 @@ const validationOfEndDate = () => {
 };
 
 // functions still in process
-// const calculateWeekend = () => {
+const calculateWeekend = () => {
+  let start = startDate.value;
+  let end = endDate.value;
+  let kindOfDays = selectWeekend.value;
+  let arrayOfDates =[];
+
+if (kindOfDays === "all-days"){
+  difference = Math.abs(new Date (end) - new Date (start));
   
-//   let kindOfDays = selectWeekend.value;
- 
+} else if (kindOfDays === "working-days"){
+  console.log("working")
+} else if (kindOfDays === "weekend"){
+  console.log("weekend")
+}
 
-// if (kindOfDays === "all-days"){
- 
-
-
-// }
-//   };
+};
 
   
 function durationBetweenDates(){
+  calculateWeekend();
 
-  let start = startDate.value;
-  let end = endDate.value;
   let unit = selectUnit.value;
-  let kindOfDays = selectWeekend.value;
-
-
-  let difference = Math.abs(new Date (end) - new Date (start)); 
 
   switch (unit){
 
@@ -111,15 +111,11 @@ function durationBetweenDates(){
 
 
 
-
-
 // // Event Listeners
 form.addEventListener("submit", handleSubmit);
 endDate.addEventListener("change", validationOfEndDate);
 plusWeek.addEventListener("click", addAWeek);
 plusMonth.addEventListener("click", addAnMonth);
-
-
 
 
 
