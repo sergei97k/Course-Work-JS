@@ -14,7 +14,9 @@ let resultOfCalculation = document.querySelector(".result");
 
 // Just variables
 let resultDateCalculation;
-let difference;
+let startValue;
+let endValue;
+let unitValue;
 
 
 
@@ -23,71 +25,39 @@ let difference;
 // functions that are working :)
 const handleSubmit = (event) => {
   event.preventDefault();
-  resultDateCalculation = durationBetweenDates(difference);
+  resultDateCalculation = durationBetweenDates(startValue, endValue, unitValue);
   resultOfCalculation.textContent = ` result: ${resultDateCalculation}`;
 
 };
-const addAWeek = () => {
-  let start = startDate.valueAsDate;
-  start.setDate(start.getDate() + 7);
 
-  let endYear = start.getFullYear();
-  let endMonth = start.getMonth() + 1 < 10 ? `0${start.getMonth() + 1}` : `${start.getMonth() + 1}`;
-  let endDay = start.getDate() < 10 ? `0${start.getDate()}` : `${start.getDate()}`;
-
-  endDate.value = `${endYear}-${endMonth}-${endDay}`;
-
-};
-const addAnMonth = () => {
-  let start = startDate.valueAsDate;
-  start.setMonth(start.getMonth() + 1);
-
-
-  let endYear = start.getFullYear();
-  let endMonth = start.getMonth() + 1 < 10 ? `0${start.getMonth() + 1}` : `${start.getMonth() + 1}`;
-  let endDay = start.getDate() < 10 ? `0${start.getDate()}` : `${start.getDate()}`;
-
-  endDate.value = `${endYear}-${endMonth}-${endDay}`;
+const handleStartInput = () => {
+  endDate.setAttribute("min", `${startDate.value}`);
+  startValue = startDate.value;
+  
 }
 
-const validationOfEndDate = () => {
-
-  let temporaryDifference = new Date (endDate.value) - new Date (startDate.value);
-  if (startDate.value === "") {
-    alert("please enter the start date first");
-    form.reset();
-    startDate.focus();
-  }else if(temporaryDifference < 0){
-    alert("start date should be smaller than end date");
-    form.reset();
-    startDate.focus();
+const handleEndInput = () => {
+   if (startDate.value === "") {
+      alert("please enter the start date first");
+      form.reset();
+      startDate.focus();
+  } else {
+    startDate.setAttribute("max", `${endDate.value}`)
+    endValue = endDate.value;
   }
 
 };
-
-// functions still in process
-const calculateWeekend = () => {
-  let start = startDate.value;
-  let end = endDate.value;
-  let kindOfDays = selectWeekend.value;
-  let arrayOfDates =[];
-
-if (kindOfDays === "all-days"){
-  difference = Math.abs(new Date (end) - new Date (start));
-  
-} else if (kindOfDays === "working-days"){
-  console.log("working")
-} else if (kindOfDays === "weekend"){
-  console.log("weekend")
+const handleUnitSelect = () => {
+  unitValue = selectUnit.value;
 }
 
-};
+// functions still in process
 
+function durationBetweenDates(start, end, unit){
   
-function durationBetweenDates(){
-  calculateWeekend();
 
-  let unit = selectUnit.value;
+  let difference =  Math.floor(Math.abs(new Date (end) - new Date (start)));
+
 
   switch (unit){
 
@@ -99,7 +69,7 @@ function durationBetweenDates(){
 
       case "day" :  
           let amountDays = Math.floor(difference / 86400000);
-          let unitDays = amountDays > 1 ? "days" : "day";
+          let unitDays = amountDays === 1 ? "day" : "days"
 
           return `${amountDays} ${unitDays}`;
        
@@ -113,9 +83,10 @@ function durationBetweenDates(){
 
 // // Event Listeners
 form.addEventListener("submit", handleSubmit);
-endDate.addEventListener("change", validationOfEndDate);
-plusWeek.addEventListener("click", addAWeek);
-plusMonth.addEventListener("click", addAnMonth);
+startDate.addEventListener("change", handleStartInput);
+endDate.addEventListener("change", handleEndInput);
+selectUnit.addEventListener("change", handleUnitSelect)
+
 
 
 
