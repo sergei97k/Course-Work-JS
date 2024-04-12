@@ -12,11 +12,11 @@ let selectUnit = document.querySelector(".select_unit");
 let resultOfCalculation = document.querySelector(".result");
 
 
-// Just variables
+// Just global variables
 let resultDateCalculation;
 let startValue;
 let endValue;
-let unitValue;
+let unitValue = selectUnit.value;
 
 
 
@@ -31,8 +31,9 @@ const handleSubmit = (event) => {
 };
 
 const handleStartInput = () => {
-  endDate.setAttribute("min", `${startDate.value}`);
   startValue = startDate.value;
+  endDate.setAttribute("min", `${startValue}`);
+ 
   
 }
 
@@ -42,8 +43,9 @@ const handleEndInput = () => {
       form.reset();
       startDate.focus();
   } else {
-    startDate.setAttribute("max", `${endDate.value}`)
     endValue = endDate.value;
+    startDate.setAttribute("max", `${endValue}`)
+   
   }
 
 };
@@ -51,10 +53,8 @@ const handleUnitSelect = () => {
   unitValue = selectUnit.value;
 }
 
-// functions still in process
 
 function durationBetweenDates(start, end, unit){
-  
 
   let difference =  Math.floor(Math.abs(new Date (end) - new Date (start)));
 
