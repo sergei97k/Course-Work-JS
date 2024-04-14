@@ -16,16 +16,59 @@ let resultOfCalculation = document.querySelector(".result");
 let resultDateCalculation;
 let startValue;
 let endValue;
+let weekendValue = selectWeekend.value;
 let unitValue = selectUnit.value;
+let arrayOfDates = [];
+let daysToCount;
 
 
+// Function of pushing date to array
+const createArrayOfDays = () => {
+  arrayOfDates = [];
+  let differenceInDays = Math.floor(Math.abs(new Date (endValue) - new Date (startValue)) / 86400000);
 
+  let startDay = new Date (startValue);
+ 
+  for (let i = 0; i <= differenceInDays; i++){
+    
+    arrayOfDates.push(startDay.toDateString());
+    startDay.setDate(startDay.getDate() + 1);
+  }
+};
+const calculateWeekend = () => {
+  let arrayOfDaysToCount = [];
 
+  if (weekendValue === "weekend"){
+    
+    arrayOfDaysToCount = arrayOfDates.filter((date) => {
+      let dayOfWeekend = new Date(date).getDay();
+      return dayOfWeekend === 0 || dayOfWeekend === 6;
+
+    })
+  } else if (weekendValue === "working-days"){
+    
+    arrayOfDaysToCount = arrayOfDates.filter((date) => {
+      let dayOfWork = new Date(date).getDay();
+      return dayOfWork !== 0 && dayOfWork !== 6;
+     
+    })
+   
+  } else {
+    arrayOfDaysToCount = arrayOfDates
+  }
+  daysToCount = arrayOfDaysToCount.length
+};
+
+const handleWeekendSelect = () => {
+  weekendValue = selectWeekend.value;
+
+};
 
 // functions that are working :)
 const handleSubmit = (event) => {
   event.preventDefault();
-  resultDateCalculation = durationBetweenDates(startValue, endValue, unitValue);
+  calculateWeekend();
+  resultDateCalculation = durationBetweenDates(unitValue);
   resultOfCalculation.textContent = ` result: ${resultDateCalculation}`;
 
 };
@@ -33,11 +76,12 @@ const handleSubmit = (event) => {
 const handleStartInput = () => {
   startValue = startDate.value;
   endDate.setAttribute("min", `${startValue}`);
- 
-  
-}
+  createArrayOfDays();
+
+};
 
 const handleEndInput = () => {
+
    if (startDate.value === "") {
       alert("please enter the start date first");
       form.reset();
@@ -47,17 +91,19 @@ const handleEndInput = () => {
     startDate.setAttribute("max", `${endValue}`)
    
   }
+  createArrayOfDays();
+ 
 
 };
 const handleUnitSelect = () => {
   unitValue = selectUnit.value;
-}
+
+};
 
 
-function durationBetweenDates(start, end, unit){
+function durationBetweenDates(unit){
 
-  let difference =  Math.floor(Math.abs(new Date (end) - new Date (start)));
-
+  let difference = daysToCount * 86400000
 
   switch (unit){
 
@@ -72,10 +118,6 @@ function durationBetweenDates(start, end, unit){
           let unitDays = amountDays === 1 ? "day" : "days"
 
           return `${amountDays} ${unitDays}`;
-       
-         
-
-
   }
 };
 
@@ -85,7 +127,8 @@ function durationBetweenDates(start, end, unit){
 form.addEventListener("submit", handleSubmit);
 startDate.addEventListener("change", handleStartInput);
 endDate.addEventListener("change", handleEndInput);
-selectUnit.addEventListener("change", handleUnitSelect)
+selectWeekend.addEventListener("change", handleWeekendSelect);
+selectUnit.addEventListener("change", handleUnitSelect);
 
 
 
