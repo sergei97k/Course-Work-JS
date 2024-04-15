@@ -33,7 +33,9 @@ const handleEndInput = () => {
 
 // Module: date.js
 function durationBetweenDates(start, end, unit) {
-  let difference = Math.floor(Math.abs(new Date(end) - new Date(start)));
+  let difference = Math.floor(Math.abs(new Date(end) - new Date(start))); // ms
+
+  // switch (type) -> кількість ms у змінну difference
 
   switch (unit) {
     case "seconds":
@@ -52,6 +54,30 @@ function durationBetweenDates(start, end, unit) {
       return `${amountDays} ${unitDays}`;
   }
 }
+
+// getWeekendsBetweenDates -> кількість вихідних днів між двома датами
+function isWeekend() {
+  //
+}
+
+function getWeekendsBetweenDates(startDate, endDate) {
+  let count = 0;
+
+  let currDate = new Date(startDate);
+  while (currDate <= new Date(endDate)) {
+    // if (isWeekend()) { count++ }
+
+    currDate.setDate(currDate.getDate() + 1);
+  }
+
+  return count;
+}
+
+// getWorkdaysBetweenDates
+
+// presets
+// addDays(date, numberOfDays) -> дату + numberOfDays днів
+// endDate.value = addDays(startDate.value, 7);
 
 // // Event Listeners
 form.addEventListener("submit", handleSubmit);
